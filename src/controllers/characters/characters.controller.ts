@@ -1,25 +1,18 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { CharactersService } from '../../services/characters/characters.service';
 
 @Controller('characters')
 export class CharactersController {
+  constructor(private service: CharactersService) {}
+
   @Get()
-  findAll(@Param() params: any) {
-    return {
-      message: 'This action returns all characters',
-      payload: {
-        params,
-      },
-    };
+  async findAll(@Query() query: any) {
+    return await this.service.getCharacters(query);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return {
-      message: 'This action returns a single character',
-      payload: {
-        id,
-      },
-    };
+  async findOne(@Param('id') id: string) {
+    return await this.service.getCharacter(id);
   }
 
   @Get(':id/comics')
