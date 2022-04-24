@@ -16,13 +16,8 @@ export class CharactersController {
   }
 
   @Get(':id/comics')
-  findComics(@Param('id') id: string) {
-    return {
-      message: 'This action returns a single character comics',
-      payload: {
-        id,
-      },
-    };
+  async findComics(@Param('id') id: string, @Query() query: any) {
+    return await this.service.getCharacterComics(id, query);
   }
 
   @Get(':id/series')
