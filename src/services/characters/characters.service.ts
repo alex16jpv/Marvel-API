@@ -2,12 +2,10 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { Request } from '../Request';
 
 @Injectable()
-export class CharactersService {
-  constructor(private request: Request) {}
-
+export class CharactersService extends Request {
   async getCharacters(query: any) {
     try {
-      const response = await this.request.get('/characters', query);
+      const response = await this.get('/characters', query);
       return {
         statusCode: response.code,
         data: response.data,
@@ -20,7 +18,7 @@ export class CharactersService {
 
   async getCharacter(id: string) {
     try {
-      const response = await this.request.get(`/characters/${id}`);
+      const response = await this.get(`/characters/${id}`);
 
       return {
         statusCode: response.code,
@@ -35,10 +33,7 @@ export class CharactersService {
 
   async getCharacterComics(id: string, query: any) {
     try {
-      const response = await this.request.get(
-        `/characters/${id}/comics`,
-        query,
-      );
+      const response = await this.get(`/characters/${id}/comics`, query);
 
       return {
         statusCode: response.code,
